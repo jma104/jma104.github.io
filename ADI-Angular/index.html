@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <title>CRUD con Angular</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="hamburger-contenido" class="hamburger bg-light text-dark" onclick="openNav()" title="Ver tabla de contenido">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div id="mySidenav" class="sidenav">
+      <a href="javasript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <h3>Contenido</h3>
+      <hr>
+      <nav class="nav flex-column">
+        <a class="nav-link font-weight-bold" href="#comienzo">Título</a>
+        <a class="nav-link" href="#integrantes">Integrantes</a>
+        <a class="nav-link font-weight-bold" href="#introduccion">Introducción</a>
+        <a class="nav-link" href="#que-es-angular">¿Qué es Angular?</a>
+        <ul style="list-style-type:none;">
+          <li class="nav-item">
+            <a class="nav-link" href="#framework">Framework web</a>
+            <a class="nav-link" href="#diferencia">Diferencias y semejanzas</a>
+          </li>
+        </ul>
+        <a class="nav-link" href="#conceptos-basicos">Conceptos básicos de Angular</a>
+        <ul style="list-style-type:none;">
+          <li class="nav-item">
+            <a class="nav-link" href="#concepto-componentes">Componentes</a>
+            <a class="nav-link" href="#concepto-plantillas">Plantillas</a>
+            <a class="nav-link" href="#concepto-directivas">Directivas</a>
+            <a class="nav-link" href="#concepto-inyeccion-dependencias">Inyección de dependencias</a>
+          </li>
+        </ul>
+        <a class="nav-link font-weight-bold" href="#comienzo-tutorial">Comienzo del tutorial</a>
+        <a class="nav-link" href="#configuracion-entorno">Configuración del entorno</a>
+        <a class="nav-link" href="#generacion-proyecto">Generación del proyecto</a>
+        <a class="nav-link" href="#servicios">Servicios</a>
+        <a class="nav-link" href="#componentes">Componentes</a>
+        <ul style="list-style-type:none;">
+          <li class="nav-item">
+            <a class="nav-link" href="#listado">Componente Listado</a>
+            <a class="nav-link" href="#creacion">Componente Creación</a>
+          </li>
+        </ul>
+        <a class="nav-link font-weight-bold" href="#conclusion">Conclusion</a>
+        <a class="nav-link font-weight-bold" href="#demo-video">Vídeo de la demo</a>
+        <a class="nav-link" href="#referencias">Referencias</a>
+      </nav>
+    </div>
+    
+    <div class="container my-5 bg-light">
+      <div class="container text-center my-5">
+        <h1 id="comienzo">Aplicaciones Distribuidas en Internet</h1>
+        <h2 class="text-secondary">Trabajo en grupo - Introducción a Angular</h2>
+      </div>
+      <hr>
+      <h5 id="integrantes">Integrantes del grupo:</h5>
+      <ul>
+        <li>Javier Martínez Albaladejo</li>
+        <li>Adrián Cerdá San Miguel</li>
+        <li>Aitor Rodríguez Sanz</li>
+      </ul>
+      <hr>
+      <h3 id="introduccion">Introducción</h3>
+      <p>
+        En este documento, vamos a tratar de introducir al lector en el mundo de Angular mostrando una visión general del framework
+        y realizando un pequeño tutorial de una aplicación CRUD.
+        Está pensado para lectores con conocimientos básicos de otros frameworks similares, en concreto, comparamos algunas
+        de sus características y conceptos con Vue.js, por ser el que hemos utilizado durante la asignatura.
+      </p>
+      <p>
+        El tutorial se basa en la versión 11 de Angular y utiliza persistencia de datos en el lado del cliente mediante localStorage,
+        sin backend, por simplicidad, ya que el objetivo es ilustrar el uso de Angular y no de backends ni de servicios como Firebase
+        que ya se pueden ver en detalle en los trabajos de nuestros compañeros.
+      </p>
+      <h3 id="que-es-angular">¿Qué es Angular?</h3>
+      <h4 id="framework">Framework web</h4>
+      <p>
+        Angular 
+        (<a href="https://www.campusmvp.es/recursos/post/las-10-principales-diferencias-entre-angularjs-y-angular.aspx">no se debe confundir con AngularJS</a>) 
+        es un framework de desarrollo de aplicaciones web pensado para crear SPAs (Single Page Applications) y aplicaciones móviles.
+        Es de código abierto, mantenido por Google y de uso gratuito. Se programa en TypeScript, que es algo así como una evolución de JavaScript
+        que añade comprobaciones de tipo de datos estáticamente.
+      </p>
+      <h4 id="diferencia">Diferencias y semejanzas</h4>
+      <p>
+        Si has trabajado con Vue o React, muchos conceptos son similares. En Angular también se pueden crear componentes con plantillas, datos y 
+        elementos reactivos. Angular tiene además un sistema de inyección de dependencias que permite utilizar servicios de manera eficiente
+        en estos componentes.
+      </p>
+      <p>
+        En cuanto a la reactividad, mientras que en Vue hay que especificar en la definición del componente el tipo de reactividad de una variable
+        (dependiendo de si se pone en computed, data, etc), en Angular simplemente se declaran como atributos de la clase del componente, como veremos
+        más adelante.
+      </p>
+      <p>
+        En cuanto a la estructura de archivos para la definición de los componentes, en Vue se pueden crear Single File Components, que lo tienen todo
+        en un único archivo, mientras que en Angular, por cada componente se crean 4 archivos, separando la plantilla, el css y la clase, más un
+        archivo de tests. Esto hace que en Angular cada componente resida en su propia carpeta.
+      </p>
+      <hr>
+      <h3 id="conceptos-basicos">Conceptos básicos de Angular</h3>
+      <h4 id="concepto-componentes">Componentes</h4>
+      <p>
+        Como hemos dicho, las aplicaciones de Angular se construyen a base de componentes.
+        Cada uno de ellos es una clase de TypeScript con anotación <code>@Component</code>, que tiene asociada una plantilla.
+        Además, para poder incluir el componente en otras plantillas, su definición incluye un selector de CSS que, típicamente,
+        es un nombre de elemento, por ejemplo <code>app-navbar</code>, para que se pueda usar el componente como <code>&lt;app-navbar/&gt;</code>.
+      </p>
+      <p>
+        Los componentes tienen además un ciclo de vida, permitiendo ejecutar acciones al pasar por cada fase.
+        El ejemplo más práctico es la función <code>ngOnInit()</code>, que nos permite preparar los atributos del componente cuando esté listo.
+      </p>
+      <p>
+        Veremos más adelante cómo crear componentes con el CLI.
+      </p>
+      <h4 id="concepto-plantillas">Plantillas</h4>
+      <p>
+        De forma similar a Vue, las plantillas de Angular se parecen mucho al HTML estándar, con elementos y atributos extra y con directivas.
+        <ul>
+          <li>
+            Se puede interpolar variables en el texto mediante la notación <code>{{ nombreVariable }}</code>.
+          </li>
+          <li>
+            Se puede enlazar un evento de un componente con un método del componente: <code>&lt;button (click)="enviar()"&gt;Ok&lt;/button&gt;</code>.
+          </li>
+          <li>
+            Se puede añadir sentencias de control con los atributos ngIf, ngFor, ...:
+            <code>&lt;li *ngFor="let a of asignaturas"&gt;...&lt;li&gt;</code>
+          </li>
+          <li>
+            Se puede añadir "pipes" o filtros (con o sin argumentos) para cambiar la presentación de unos datos:
+            <code>{{ birthday | date:"MM/dd/yy" }}</code>
+          </li>
+          <li>
+            Se puede enlazar propiedades de un elemento a una expresión dinámica (en este ejemplo una variable, 
+            que puede ser una propiedad del componente): 
+            <code>&lt;img [src]="urlImagen"&gt;</code>
+          </li>
+          <li>
+            Se puede enlazar bidireccionalmente una propiedad de un componente: 
+            <code>&lt;mi-componente [(propiedad)]="5"&gt;</code>.<br>
+            Pero para ello, hay que definir lo siguiente en el componente:
+            <pre>
+    @Input() propiedad: number
+    @Output() propiedadChange = new EventEmitter&lt;number&gt;()  // importante que sea el mismo nombre + Change
+    cambiarPropiedad(p: number) {
+      this.propiedad = p
+      this.propiedadChange.emit(this.propiedad)  // siempre que cambie la propiedad se debe emitir el evento
+    }
+            </pre>
+            Más información sobre two-way binding <a href="https://angular.io/guide/two-way-binding">aquí</a>
+            y sobre las anotaciones <code>@Input</code> y <code>@Output</code> <a href="https://angular.io/guide/inputs-outputs">aquí</a>.
+          </li>
+          <li>
+            Se puede declarar una variable de plantilla para referirnos a un elemento o componente desde cualquier parte de la misma plantilla: 
+            <pre>
+              &lt;input #phone placeholder="phone number" /&gt;
+              &lt;button (click)="callPhone(phone.value)"&gt;Call&lt;/button&gt;
+            </pre>
+            <a href="#creacionForm">Más adelante</a> veremos un caso particular de uso de variables de plantilla para un formulario con la
+            directiva <code>ngModel</code>.
+            Más información <a href="https://angular.io/guide/template-reference-variables#using-ngform-with-template-variables">aquí</a>.
+          </li>
+        </ul>
+      </p>
+      <h4 id="concepto-directivas">Directivas</h4>
+      <p>
+        Hay tres tipos de directivas:
+        <ul>
+          <li>De atributo:
+            <ul>
+              <li>Se añaden en las plantillas como si fueran atributos de HTML a otros componentes o elementos HTML.</li>
+              <li>Modifican el comportamiento de dichos elementos.</li>
+              <li>
+                Ejempos built-in (definidos por módulos como RouterModule o FormsModule):
+                <ul>
+                  <li><code>NgClass</code>: Controla la(s) clase(s) CSS.</li>
+                  <li><code>NgStyle</code>: Estilos CSS.</li>
+                  <li><code>NgModel</code>: <a href="#creacionForm">Más adelante</a> se verá en uso.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Estructurales:
+            <ul>
+              <li>Responsables del layout del HTML. Añaden, quitan o manipulan elementos.</li>
+              <li>Ejemplos built-in: <code>NgIf</code>, <code>NgFor</code>, <code>NgSwitch</code></li>
+            </ul>
+          </li>
+          <li>Componentes: sí, los componentes son directivas, con la particularidad de que tienen una plantilla.</li>
+        </ul>
+      </p>
+      <p>
+        Se construyen como los componentes: son clases con la anotación <code>@Directive</code> y un selector CSS.
+      </p>
+      <p>
+        Pueden responder a eventos del elemento en el que se ponen, por ejemplo, añadiendo listeners de la siguiente forma en la clase:
+        <pre>
+          @HostListener('mouseenter') onMouseEnter() {
+            this.highlight('yellow');
+          }
+          private highlight(color: string) {
+            this.el.nativeElement.style.backgroundColor = color;
+          }
+        </pre>
+      </p>
+      <p>
+        Se pueden definir directivas estructurales que hagan lo mismo que las built-in. Más información
+        <a href="https://angular.io/guide/structural-directives">aquí</a>.
+      </p>
+      <h4 id="concepto-inyeccion-dependencias">Inyección de dependencias (Servicios)</h4>
+      <p>
+        Una clase necesita unos servicios u objetos para realizar sus funciones. Esos son los que llamamos sus dependencias.
+        El mecanismo de inyección de dependencias de Angular permite proveer a la clase de dichas dependencias en el momento
+        de la instanciación.
+      </p>
+      <p>
+        En otras palabras, si en un componente se necesita acceso a un servicio, puedes incluir el servicio como argumento del
+        constructor del componente:
+        <pre>constructor(listadoService: ListadoService)</pre>
+        ...y Angular se encarga de inyectar la instancia del servicio a la hora de construir el componente. Eso sí, para que Angular sepa
+        que <code>ListadoService</code> es un servicio inyectable, es necesario declarar la clase del servicio con la siguiente anotación:
+        <pre>
+          @Injectable({
+            providedIn: 'root'
+          })
+          export class ListadoService{ ... }
+        </pre>
+      </p>
+      <p class="pb-3">
+        También se puede inyectar un servicio en el constructor de otro servicio, de la misma manera.
+      </p>
+
+
+
+      <hr class="pb-3">
+
+
+      <h2 id="comienzo-tutorial">Comienzo del tutorial</h2>
+      <p>
+        Vamos a comenzar con el tutorial de una sencilla aplicación que permite realizar CRUD sobre un conjunto de Asignaturas.
+      </p>
+
+
+      <h3 id="configuracion-entorno">Configuración del entorno</h3>
+      <p>
+        Lo primero es instalar Node. Para esto simplemente vamos a la <a target="_blank" href="https://nodejs.org/es/download/">página oficial de Node</a> y nos lo descargamos para nuestro SO.
+        Si estás en Linux, seguramente lo podrás instalar desde el gestor de paquetes de tu distribución.
+        Una vez instalado Node, tenemos que hacer lo mismo con Angular, usando el siguiente comando:
+        <pre>
+         npm install -g @angular/cli  <span style="color:gray ">#instala la última versión de angular/cli</span>
+         ng update @angular/cli  <span style="color:gray ">#para actualizar angular/cli</span>
+         npm uninstall -g @angular/cli  <span style="color:gray ">#desinstala angular/cli</span>
+        </pre>
+
+      </p>
+      <h3 id="generacion-proyecto">Generación del proyecto</h3>
+      <p>
+        Una vez configurado el entrono podemos crear nuestro proyecto usando el siguiente comando:
+        <pre id="pre1"></pre>
+        Con esto se nos generará nuestro proyecto y ya podremos importarlo a nuestro IDE para poder trabajar en él.<br>
+        El <code>--routing</code> es para habilitar el uso del router.<br>
+        <img src="imagenes/proyecto.png">
+      </p>
+      <h3 id="servicios">Servicios</h3>
+      <p>
+        Para la aplicación usaremos un archivo de servicios para definir la lógica de la aplicación. 
+        Para crearlos usaremos los comandos de CLI.
+        <pre id="pre2">
+        </pre>
+        En este servicio es desde donde inicializaremos nuestros datos desde el localStorage y donde definiremos
+        las operaciones del CRUD. Si en lugar de almacenar los datos en localStorage tuviésemos un backend, también es aquí
+        donde pondríamos nuestras llamadas al API del backend.
+        <pre id="service">
+
+        </pre>
+      </p>
+      <h3 id="componentes">Componentes</h3>
+      <p>
+        Para nuestra página tendremos diferentes componentes. Para crearlos usaremos los comandos de CLI.
+        <pre id="pre3">
+        </pre>
+        Si no pusiéramos el <code>components/</code> delante, crearía todos los componentes directamente en la carpeta <code>src/app</code>.
+        De esta forma, los crea en <code>src/app/components</code>, para tenerlo más organizado.
+      </p>
+      <h3 id="listado">Componente Listado</h3>
+      <p>
+        Este componente tendrá una tabla en la que podremos ver el listado de asignaturas.
+        Para definir las asignaturas hemos creado un model, usando el siguiente comando del CLI.
+        <pre id="generateModel"></pre>
+        <pre id="pre4"></pre>
+        Tras definir el modelo creamos una tabla en el fichero de la plantilla (el <code>.component.html</code>) como la siguiente.
+        <pre id="pre5"></pre>
+        En el fichero TypeScript del componente, que es donde definiremos la lógica del componente, declaramos 
+        un array de <code>Asignatura</code>. Este array se inicializa con la función <code>ngOnInit()</code>. Usamos el servicio para
+        obtener el listado de asignaturas y desde la tabla iteramos sobre la lista para mostrarlas todas.
+        En la tabla hemos definido 2 botones. Uno para eliminar y otro para editar. El componente eliminar 
+        lo que hace es pasar el id de la asignatura que queremos eliminar a la función de <code>deleteAsignatura()</code>.
+        Esta función simplemente, usando el service, pasa el id de la asignatura a eliminar y la borra.
+        El botón de editar, en cambio, nos llevará a una nueva vista: el componente creacion, que veremos a 
+        continuación.
+        <pre id="pre6"></pre>
+      </p>
+      <h3 id="creacion">Componente Creación</h3>
+      <p>
+        Este componente tendrá un formulario para crear o editar asignaturas. Para guardar los valores que
+        introduzca el usuario vamos a usar <code>ngModel</code>. NgModel se trata de una sintaxis que nos provee Angular
+        para realizar dataBinding bidireccional de manera más sencilla. <br>
+        Lo primero es importar <code>FormsModule</code> en al archivo <code>app.module.ts</code>. 
+        <pre id="appModule">
+
+        </pre>
+        Una vez instalado podremos usar la directiva <code>ngModel</code> en nuestra plantilla y los valores 
+        introducidos serán guardados tanto en la plantilla como en el componente. 
+        <pre id="creacionForm">
+        </pre>
+        En el fichero TypeScript lo primero que hacemos es comprobar si se ha pasado el párametro <code>id</code> a través de la URL.
+        Esto lo hacemos para diferenciar si el usuario quiere crear una nueva asignatura o editar una.
+        Una vez sabemos que operación se quiere hacer usamos el servicio de la operación. En caso de 
+        crear simplemente pasamos la nueva asignatura. Si queremos editar pasamos la asignatura con
+        los nuevos datos y su id.
+        <pre id="creacionTS"></pre> 
+      </p>
+
+      <hr>
+
+      <h3 id="conclusion">Conclusión</h3>
+      <p>
+        Angular es un framework a considerar a la hora de realizar el cliente de una aplicación web.
+        Pese a su gran curva, que es bastante alta, si has trabajado previamente con algún framework MVC 
+        te sentirás muy familiarizado.
+      </p>
+      <img src="imagenes/grafica-aprendiendo-angular.png" class="center">
+      <div class="row pt-3">
+        <p>
+          Si todavía tenéis dudas acerca de aprender Angular, aquí tenéis algunas de las ventajas más relevantes de Angular frente a otros frameworks:
+        </p>
+        <div class="col-9 pt-5">
+          <li>Gran comunidad y amplia documentación</li>
+          <li>Facilidades para el testing</li>
+          <li>Desarrollo en paralelo</li>
+        </div>
+        <div class="col-3">
+          <img src="imagenes/Angular_full_color_logo.svg.png" class="w-100">
+        </div>
+      </div>
+      <p>
+        Sin embargo, tiene algunos aspectos negativos de los cuales nos hemos ido dando cuenta a medida que hemos desarrollado esta aplicación.
+      </p>
+      <p>
+        Por ejemplo, en el caso de los servicios y de los componentes, se añade al nombre <code>.component</code> o <code>.service</code> según corresponda.
+        Esto, combinado con los cuatro archivos por componente, hace más dificil encontrar el archivo que buscas en el explorador de archivos
+        del editor o en las pestañas abiertas,
+        ya que son todos los nombres muy parecidos y con el nombre del componente y la extensión visualmente muy separados.
+      </p>
+      <p>
+        Por otra parte, el tiempo que tarda en arrancar el servidor es mayor que en otros frameworks que usan JavaScript en vez de TypeScript.
+      </p>
+
+      <hr>
+      <h1 id="demo-video">Vídeo de la demo</h1>
+      <div class="text-center">
+        <iframe src="https://drive.google.com/file/d/1RrBiHigy1Oed_astvi0LhxV22LkLNkyg/preview" width="640" height="360"></iframe>
+        <small><br>
+          Si no se ve bien el vídeo, puedes ir con el enlace 
+          <a href="https://drive.google.com/file/d/1RrBiHigy1Oed_astvi0LhxV22LkLNkyg/view?usp=sharing" target="_blank">aquí</a>.
+        </small>
+      </div>
+      <hr>
+
+      <h3 id="referencias">Referencias</h3>
+      <ul>
+        <li><a href="https://angular.io/docs" target="_blank">Documentación oficial de Angular</a></li>
+        <li><a href="https://www.arquitecturajava.com/angular-ngmodel-y-two-way-databindings/" target="_blank">Doble enlace de datos</a></li>
+        <li><a href="https://www.campusmvp.es/catalogo/Product-Desarrollo-de-aplicaciones-web-con-angular-10_232.aspx" target="_blank">Curso de Angular por CampusMVP</a></li>
+        <li><a href="https://www.campusmvp.es/recursos/post/las-10-principales-diferencias-entre-angularjs-y-angular.aspx" target="_blank">Diferencias entre AngularJS yAngular</a></li>
+        <li><a href="https://www.devglan.com/angular/angular-8-crud-example" target="_blank">Ejemlpo de CRUD con Angular 8</a></li>
+        <li><a href="https://fbellod.medium.com/como-integrar-el-framework-bootstrap-en-un-proyecto-angular-a5d53fa79e03#b67b" target="_blank">Instalar Bootstrap en Angular</a></li>
+      </ul>
+    </div>
+    <script src="scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  </body>
+</html>
